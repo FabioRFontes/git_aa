@@ -1,0 +1,124 @@
+% ---------------------------------------------------------------------------- %
+
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{a4wide}
+\usepackage{fancyvrb}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{minted}
+\usepackage{mdframed}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage[titletoc,title]{appendix}
+\usepackage[hidelinks]{hyperref}
+\usepackage[notindex,nottoc,notlot,notlof]{tocbibind}
+\usepackage{sectsty}
+
+% ---------------------------------------------------------------------------- %
+
+\addto\captionsportuguese{%
+    \renewcommand\listoflistingscaption{Lista de Listagens}%
+    \renewcommand\listingscaption{Listagem}%
+}
+
+% Utility macros:
+
+\newcommand{\secref}[1]{Secção~\ref{#1}}
+\newcommand{\anxref}[1]{Anexo~\ref{#1}}
+\newcommand{\figref}[1]{Figura~\ref{#1}}
+\newcommand{\tblref}[1]{Tabela~\ref{#1}}
+\newcommand{\itemizedpar}[1]{\paragraph{\textbf{#1}}}
+
+\newminted{gawk}{frame=leftline,xleftmargin=19pt,framesep=10pt}
+\newminted{text}{frame=leftline,xleftmargin=19pt,framesep=10pt}
+
+% Author notes:
+
+\newcommand{\mynote}[3]{\fbox{\bfseries\sffamily\scriptsize#1}{\small$\blacktriangleright$\textsf{\emph{\color{#3}{#2}}}$\blacktriangleleft$}}
+\newcommand{\luis}[1]{\mynote{luis}{#1}{red}}
+\newcommand{\fabio}[1]{\mynote{fabio}{#1}{blue}}
+
+% Uncomment the following lines to hide author notes:
+% \renewcommand{\luis}[1]{\ignorespaces}
+% \renewcommand{\fabio}[1]{\ignorespaces}
+
+% ---------------------------------------------------------------------------- %
+
+
+\title{
+    Proposta para o Projecto \\
+    Aprendizagem Automática I
+    }
+
+\author{
+    % \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Grupo ??\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \and
+    Luís Meruje (A) \and
+    Fábio Fontes (A78650)
+}
+
+\date{Novembro 2018}
+
+% ---------------------------------------------------------------------------- %
+
+\begin{document}
+
+% ---------------------------------------------------------------------------- %
+% Colocar a imagem da universidade no topo
+% Organizar a página.
+
+\maketitle
+
+% ---------------------------------------------------------------------------- %
+
+\clearpage
+\section*{Membros}
+\label{sec:membros}
+
+% ---------------------------------------------------------------------------- %
+
+\clearpage
+\section*{Proposta para o projecto}
+\label{sec:proposta}
+
+
+% ---------------------------------------------------------------------------- %
+
+\subsection*{Descrição do Problema}
+\label{subsec:descricao_problema}
+
+
+% ---------------------------------------------------------------------------- %
+
+\subsection*{Descrição do Conjunto de Dados}
+\label{subsec:descricao_conjunto}
+
+% ---------------------------------------------------------------------------- %
+
+\subsection*{Supervisionado ou Não Supervisionado}
+\label{subsec:sup_nsup}
+
+O problema em mãos trata-se de um problema supervisionada, 
+
+% ---------------------------------------------------------------------------- %
+
+\subsection*{Regressão ou Classificação}
+\label{subsec:regre_class}
+
+Regressão
+
+% ---------------------------------------------------------------------------- %
+
+\subsection*{Comentários e/ou Preocupações}
+\label{subsec:comentarios}
+
+
+
+% ---------------------------------------------------------------------------- %
+
+\end{document}
+
+% ---------------------------------------------------------------------------- %
