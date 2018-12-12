@@ -1,25 +1,35 @@
+# ---------------------------------------------------------------------------- #
+                                                                               
+#   Script com métodos utilizados na resolução do projeto
+
+# ---------------------------------------------------------------------------- #
+# Libraries used
 
 library(data.table)
-library(biglm)
+library(biglm) # Biblioteca que permite a execução em parcelas da função lm.
+
+# ---------------------------------------------------------------------------- #
 
 setwd("~/Downloads/train")
+
 train <- fread("train_V2.csv", header = T)
-chunck1.crashfpp <- train[matchType=="crashfpp", ]
-chunck2.crashtpp <- train[matchType=="crashtpp", ]
-chunck3.duo <- train[matchType=="duo", ]
-chunck4.duo_fpp <- train[matchType=="duo-fpp", ]
-chunck5.flarefpp <- train[matchType=="flarefpp", ]
-chunck6.flaretpp <- train[matchType=="flaretpp", ]
-chunck7.normal_duo <- train[matchType=="normal-duo", ]
-chunck8.normal_duo_fpp <- train[matchType=="normal-duo-fpp", ]
-chunck9.normal_solo <- train[matchType=="normal-solo", ]
-chunck10.normal_solo_fpp <- train[matchType=="normal-solo-fpp", ]
-chunck11.normal_squad <- train[matchType=="normal-squad", ]
-chunck12.normal_squad_fpp <- train[matchType=="normal-squad-fpp", ]
-chunck13.solo <- train[matchType=="solo", ]
-chunck14.solo_fpp <- train[matchType=="solo-fpp", ]
-chunck15.squad <- train[matchType=="squad", ]
-chunck16.squad_fpp <- train[matchType=="squad-fpp", ]
+
+chunk.crashfpp <- train[matchType=="crashfpp", ]
+chunk.crashtpp <- train[matchType=="crashtpp", ]
+chunk.duo <- train[matchType=="duo", ]
+chunk.duo_fpp <- train[matchType=="duo-fpp", ]
+chunk.flarefpp <- train[matchType=="flarefpp", ]
+chunk.flaretpp <- train[matchType=="flaretpp", ]
+chunk.normal_duo <- train[matchType=="normal-duo", ]
+chunk.normal_duo_fpp <- train[matchType=="normal-duo-fpp", ]
+chunk.normal_solo <- train[matchType=="normal-solo", ]
+chunk.normal_solo_fpp <- train[matchType=="normal-solo-fpp", ]
+chunk.normal_squad <- train[matchType=="normal-squad", ]
+chunk.normal_squad_fpp <- train[matchType=="normal-squad-fpp", ]
+chunk.solo <- train[matchType=="solo", ]
+chunk.solo_fpp <- train[matchType=="solo-fpp", ]
+chunk.squad <- train[matchType=="squad", ]
+chunk.squad_fpp <- train[matchType=="squad-fpp", ]
 
 attach(train)
 train[matchType=="squad-fpp" & groupId=="4d4b580de459be",]
@@ -36,3 +46,5 @@ regfit.fwd=regsubsets(ff,data=train,nvmax=39,method="forward")
 summary(regfit.fwd)
 
 class(regfit.fwd)
+
+# ---------------------------------------------------------------------------- #
