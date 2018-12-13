@@ -7,6 +7,7 @@
 
 library(data.table)
 library(AlgDesign)
+library(dplyr)
 
 # ---------------------------------------------------------------------------- #
 
@@ -20,8 +21,8 @@ names(training)
 
 # Formúla para obter o winPlacePerc sem a utilização das variáveis categorias
 ff <- winPlacePerc ~ . - Id - matchId - groupId - matchType
-
-model <- lm(ff, data=training)
+ff2 <- winPlacePerc ~ . - groupId - Id
+model <- lm(ff2, data=train)
 summary(model)
 
 rm(model)
@@ -45,7 +46,13 @@ summary(model3)
 rm(model3)
 gc()
 
-
+attach(model)
+names(model)
+class(coefficients)
+names(coefficients)
+effects
+s <- summary(model)
+coef(s)[, "t value"]
 
 # ---------------------------------------------------------------------------- #
 #### Primeira submissão no kagglelibrary(data.table)
@@ -72,3 +79,35 @@ submission = cbind(Id=test$Id,winPlacePerc=p)
 write.csv(submission,'sample_submission.csv',row.names = FALSE)
 
 
+train <- training %>% 
+  group_by(groupId) %>%
+  summarise(Id = length(Id),
+            assists = sum(assists),
+            DBNOs = sum(DBNOs),
+            boosts = sum(boosts),
+            damageDealt = sum(damageDealt),
+            headshotKills = sum(headshotKills),
+            heals = sum(heals),
+            killPlace= mean(killPlace),
+            killPoints = mean(killPoints),
+            killStreaks = max(killStreaks),
+            kills = sum(kills),
+            longestKill = max(longestKill),
+            matchDuration = mean(matchDuration),
+            rankPoints = mean(rankPoints),
+            revives = sum(revives),
+            rideDistance = max(rideDistance),
+            roadKills = sum(roadKills),
+            swimDistance = max(swimDistance),
+            teamKills = sum(teamKills),
+            vehicleDestroys = sum(vehicleDestroys),
+            walkDistance = max(walkDistance),
+            weaponsAcquired = sum(weaponsAcquired),
+            winPoints = min(winPoints),
+            numGroups = mean(numGroups),
+            maxPlace = mean(maxPlace),
+            winPlacePerc = (mean(winPlacePerc)))
+
+head(training)
+training[1:10,c(-1, -2, -3, -16)] %>%
+  summarise_all()
