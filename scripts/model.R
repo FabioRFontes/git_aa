@@ -8,24 +8,34 @@
 library(data.table)
 library(AlgDesign)
 library(dplyr)
+library(randomForest)
 
 # ---------------------------------------------------------------------------- #
 
 setwd("/home/fabio/Desktop/UMinho_4_Ano/gits/git_aa/datasets/")
 
 training <- fread("train_V2.csv", header = T)
-trest <- fread("test_V2.csv", header = T)
+test <- fread("test_V2.csv", header = T)
 
 attach(training)
 names(training)
 
 # Formúla para obter o winPlacePerc sem a utilização das variáveis categorias
 ff <- winPlacePerc ~ . - Id - matchId - groupId - matchType
-ff2 <- winPlacePerc ~ . - groupId - Id
+ff2 <- winPlacePerc ~ .
+train$Id = NULL
+train$groupId = NULL
+
+train <- train[!is.na(train$winPlacePerc),]
+is.na(train$winPlacePerc)
+
+model <- randomForest(ff2, data=train)
 model <- lm(ff2, data=train)
 summary(model)
+p <- predict(model, test)
 
-rm(model)
+p[c(1,2,2,3)]
+?rm(model)
 gc()
 
 # Formúla para obter o winPlacePerc sem a utilização das variáveis categorias
@@ -46,13 +56,13 @@ summary(model3)
 rm(model3)
 gc()
 
-attach(model)
-names(model)
-class(coefficients)
-names(coefficients)
-effects
+# Permite obter o vetor dos t values
 s <- summary(model)
 coef(s)[, "t value"]
+
+rm(test)
+gc()
+
 
 # ---------------------------------------------------------------------------- #
 #### Primeira submissão no kagglelibrary(data.table)
@@ -72,8 +82,8 @@ test$Id = NULL
 test$groupId = NULL
 test$matchId = NULL
 test$longestKill = NULL
-p <- predict(model,test) 
-
+p <- predict(model,test)
+names(test)
 test<- fread("../input/test_V2.csv", header = T)
 submission = cbind(Id=test$Id,winPlacePerc=p)
 write.csv(submission,'sample_submission.csv',row.names = FALSE)
@@ -108,6 +118,5 @@ train <- training %>%
             maxPlace = mean(maxPlace),
             winPlacePerc = (mean(winPlacePerc)))
 
-head(training)
-training[1:10,c(-1, -2, -3, -16)] %>%
-  summarise_all()
+
+
