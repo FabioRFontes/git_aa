@@ -12,22 +12,67 @@ library(randomForest)
 
 # ---------------------------------------------------------------------------- #
 
+
 setwd("/home/fabio/Desktop/UMinho_4_Ano/gits/git_aa/datasets/")
 
 training <- fread("train_V2.csv", header = T)
 test <- fread("test_V2.csv", header = T)
 
+
 attach(training)
+attach(test)
 names(training)
+
+length(Id[is.na(Id)])
+length(headshotKills[is.na(headshotKills)])
+length(groupId[is.na(groupId)])
+length(matchId[is.na(matchId)])
+length(assists[is.na(assists)])
+length(boosts[is.na(boosts)])
+length(damageDealt[is.na(damageDealt)])
+length(DBNOs[is.na(DBNOs)])
+length(heals[is.na(heals)])
+length(killPlace[is.na(killPlace)])
+length(killPoints[is.na(killPoints)])
+length(kills[is.na(kills)])
+length(killStreaks[is.na(killStreaks)])
+length(longestKill[is.na(longestKill)])
+length(matchDuration[is.na(matchDuration)])
+length(matchType[is.na(matchType)])
+length(maxPlace[is.na(maxPlace)])
+length(numGroups[is.na(numGroups)])
+length(rankPoints[is.na(rankPoints)])
+length(revives[is.na(revives)])
+length(rideDistance[is.na(rideDistance)])
+length(roadKills[is.na(roadKills)])
+length(swimDistance[is.na(swimDistance)])
+length(teamKills[is.na(teamKills)])
+length(vehicleDestroys[is.na(vehicleDestroys)])
+length(walkDistance[is.na(walkDistance)])
+length(weaponsAcquired[is.na(weaponsAcquired)])
+length(winPoints[is.na(winPoints)])
+length(winPlacePerc[is.na(winPlacePerc)])
+
+
+
 
 # Formúla para obter o winPlacePerc sem a utilização das variáveis categorias
 ff <- winPlacePerc ~ . - Id - matchId - groupId - matchType
 ff2 <- winPlacePerc ~ .
+ff3 <- winPlacePerc ~ assists
+ff3 <- winPlacePerc ~ kills
 train$Id = NULL
 train$groupId = NULL
 
 train <- train[!is.na(train$winPlacePerc),]
-is.na(train$winPlacePerc)
+is.na(training$winPlacePerc)
+
+boxplot(ff3, data=training)
+boxplot(assists)
+boxplot(walkDistance)
+summary(as.factor(assists))
+
+cor(training, method="pearson")
 
 model <- randomForest(ff2, data=train)
 model <- lm(ff2, data=train)
@@ -69,11 +114,16 @@ gc()
 
 # Input data files are available in the "../input/" directory.
 # For example, running this (by clicking run or pressing Shift+Enter) will list the files in the input directory
-train<-fread("../input/train_V2.csv", header = T)
+train<-fread("train_V2.csv", header = T)
 train$Id = NULL
 train$groupId = NULL
 train$matchId = NULL
 train$longestKill = NULL
+train$matchType = NULL
+cor(train, method="pearson")
+cor(train, method="spearman")
+cor(train, method="kendall")
+
 ff3 <- winPlacePerc ~ . + winPoints * rankPoints
 model <- lm(ff3,data=train)
 
