@@ -112,6 +112,21 @@ train3$groupId = NULL
 
 
 
+# nullPoints = train2[ train2$rankPoints == -1 
+#                      & train2$winPoints == 0 
+#                      & train2$killPoints == 0
+#                      & train2$matchType != "crashfpp" 
+#                      & train2$matchType != "crashtpp" 
+#                      & train2$matchType != "flarefpp", ]
+# nonNullPoints = train2[ train2$rankPoints != -1 
+#                         | train2$matchType == "crashfpp" 
+#                         | train2$matchType == "crashtpp" 
+#                         | train2$matchType == "flarefpp", ]
+# indDeterminatePoints <- match(nullPoints$Id, train$Id)
+# ffPoints <- winPoints ~ .
+# train4
+
+
 # Test Dataset ---------------------- #
 
 attach(test)
@@ -200,9 +215,15 @@ fm1 <- winPlacePerc ~ .
 fm2 <- winPlacePerc ~ . - Id - matchId - groupId . matchType
 fm3 <- winPlacePerc ~ . + winPoints * rankPoints
 fm4 <- winPlacePerc ~ . + killPoints * rankPoints
+fm5 <- winPlacePerc ~ . + killPoints * rankPoints + winPoints * rankPoints
 
-cor1 <- cor(train2)
-cor2 <- cor(train3)
+cor1_pearson <- cor(train2, method="pearson")
+cor1_spearman <- cor(train2, method="spearman")
+cor1_kendall <- cor(train2, method="kendall")
+
+cor2_pearson <- cor(train3, method="pearson")
+cor2_spearman <- cor(train3, method="spearman")
+cor2_kendall <- cor(train3, method="kendall")
 
 # ---------------------------------------------------------------------------- #
 # Models
